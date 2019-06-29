@@ -57,7 +57,7 @@ def write_file(file, content):
 
 if __name__ == '__main__':
     # 待合成文本内容
-    r = requests.post(URL, headers=get_header(), data=get_body("robot_response.txt"))
+    r = requests.post(URL, headers=get_header(), data=get_body("text2voice.txt"))
     # 接受信息
     contentType = r.headers['Content-Type']
     if contentType == "audio/mpeg":
@@ -65,11 +65,11 @@ if __name__ == '__main__':
         if AUE == "raw":
             # 合成音频格式为pcm、wav并保存在根目录下
             # write_file(sid + ".wav", r.content)
-            write_file("robot_voice.wav", r.content)
+            write_file("text2voice.wav", r.content)
         else:
             # 合成音频格式为mp3并保存在根目录下
             # write_file(sid + ".mp3", r.content)
-            write_file("robot_voice.wav", r.content)
+            write_file("text2voice.mp3", r.content)
         print("### Write Voice Succeed ###")
     else:
         print("### Write Voice Failed ###")

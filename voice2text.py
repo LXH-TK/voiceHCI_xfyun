@@ -58,7 +58,7 @@ def upload():
         buffer = base64.b64encode(buffer).decode(encoding='utf-8')
         # 发送每一帧
         if send_status == 2:
-            print("发送最后一帧")
+            print("发送最后一帧...")
             ws.send(json.dumps({
                 "data": {
                     "status": send_status,
@@ -69,7 +69,7 @@ def upload():
             }))
             break
         elif send_status == 0:
-            print("发送第一帧")
+            print("发送第一帧...")
             ws.send(json.dumps({
                 "common": {
                     "app_id": "5d1473f7"
@@ -103,6 +103,13 @@ def upload():
 
 def on_message(ws, message):
     print(message)
+    text = json.loads(message)
+    res = text['data']['result']['ws']
+    f = open("voice2text.txt", 'a')
+    # 不是多句子选择，直接选择第一个词语
+    for i in range(0, len(res)):
+        f.write(res[i]['cw'][0]['w'])
+    f.close()
 
 
 def on_error(ws, error):
